@@ -44,19 +44,14 @@ func (e Entity) GetDis() string {
 }
 
 func (e Entity) MarshallJSON() ([]byte, error)  {
-	s := JsonStructure{
-		ID:   e.id,
-		Dis:  e.dis,
-		Tags: nil,
-	}
-
 	tags := map[Label]string{}
 
 	for l, v := range e.Tags {
 		tags[l] = v.ToHaystackJsonValue()
 	}
 
-	s.Tags = tags
+	tags["id"] = e.id
+	tags["dis"] = e.dis
 
-	return json.Marshal(s)
+	return json.Marshal(tags)
 }

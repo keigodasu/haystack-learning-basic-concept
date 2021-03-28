@@ -152,7 +152,7 @@ func TestEntity_MarshallJSON(t *testing.T) {
 				dis:  "test",
 				Tags: map[Label]Value{"testTagKey": &Str{val: "testTagValue"}},
 			},
-			want:    []byte(`{"ID":"1111","Dis":"test","Tags":{"testTagKey":"s:testTagValue"}}`),
+			want:    []byte(`{"dis":"test","id":"1111","testTagKey":"s:testTagValue"}`),
 			wantErr: false,
 		},
 		{
@@ -162,7 +162,7 @@ func TestEntity_MarshallJSON(t *testing.T) {
 				dis:  "test",
 				Tags: map[Label]Value{"testTagKey": &Bool{val: true}},
 			},
-			want:    []byte(`{"ID":"1111","Dis":"test","Tags":{"testTagKey":"b:true"}}`),
+			want:    []byte(`{"dis":"test","id":"1111","testTagKey":"b:true"}`),
 			wantErr: false,
 		},
 		{
@@ -172,7 +172,7 @@ func TestEntity_MarshallJSON(t *testing.T) {
 				dis:  "test",
 				Tags: map[Label]Value{"testTagKey": &Bool{val: true}, "testTagKeyStr": &Str{val: "testTagValue"}},
 			},
-			want:    []byte(`{"ID":"1111","Dis":"test","Tags":{"testTagKey":"b:true","testTagKeyStr":"s:testTagValue"}}`),
+			want:    []byte(`{"dis":"test","id":"1111","testTagKey":"b:true","testTagKeyStr":"s:testTagValue"}`),
 			wantErr: false,
 		},
 	}
