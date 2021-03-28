@@ -23,7 +23,7 @@ func main() {
 	fmt.Println(string(jsonEncoded))
 
 	grid := hay.Grid{
-		Meta:     nil,
+		Meta:     map[string]string{"ver": "3.0", "projName": "test"},
 		Entities: []*hay.Entity{entity},
 	}
 	jsonEncoded, _ = grid.MarshallJSON()

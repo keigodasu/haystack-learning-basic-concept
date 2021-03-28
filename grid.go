@@ -27,7 +27,7 @@ func (g Grid) MarshallJSON() ([]byte, error) {
 	}
 
 	cols := make([]Col, len(tags))
-	rows := make([]map[string]string, len(g.Entities))
+	var rows []map[string]string
 
 	i := 0
 	for tag := range tags {
@@ -40,7 +40,7 @@ func (g Grid) MarshallJSON() ([]byte, error) {
 	}
 
 	gjson := GridJSON{
-		Meta: nil,
+		Meta: g.Meta,
 		Cols: cols,
 		Rows: rows,
 	}
