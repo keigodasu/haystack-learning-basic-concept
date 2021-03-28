@@ -87,7 +87,7 @@ func TestEntity_GetID(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			e := &Entity{
-				id:    tt.fields.id,
+				id:   tt.fields.id,
 				dis:  tt.fields.dis,
 				Tags: tt.fields.Tags,
 			}
@@ -122,7 +122,7 @@ func TestEntity_GetDis(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			e := Entity{
-				id:    tt.fields.ID,
+				id:   tt.fields.ID,
 				dis:  tt.fields.dis,
 				Tags: tt.fields.Tags,
 			}
@@ -146,8 +146,8 @@ func TestEntity_MarshallJSON(t *testing.T) {
 		wantErr bool
 	}{
 		{
-			name:    "marshall entity with only Str",
-			fields:  fields{
+			name: "marshall entity with only Str",
+			fields: fields{
 				ID:   "1111",
 				dis:  "test",
 				Tags: map[Label]Value{"testTagKey": &Str{val: "testTagValue"}},
@@ -156,8 +156,8 @@ func TestEntity_MarshallJSON(t *testing.T) {
 			wantErr: false,
 		},
 		{
-			name:    "marshall entity with only Bool",
-			fields:  fields{
+			name: "marshall entity with only Bool",
+			fields: fields{
 				ID:   "1111",
 				dis:  "test",
 				Tags: map[Label]Value{"testTagKey": &Bool{val: true}},
@@ -166,8 +166,8 @@ func TestEntity_MarshallJSON(t *testing.T) {
 			wantErr: false,
 		},
 		{
-			name:    "marshall entity with all type",
-			fields:  fields{
+			name: "marshall entity with all type",
+			fields: fields{
 				ID:   "1111",
 				dis:  "test",
 				Tags: map[Label]Value{"testTagKey": &Bool{val: true}, "testTagKeyStr": &Str{val: "testTagValue"}},
@@ -179,7 +179,7 @@ func TestEntity_MarshallJSON(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			e := Entity{
-				id:    tt.fields.ID,
+				id:   tt.fields.ID,
 				dis:  tt.fields.dis,
 				Tags: tt.fields.Tags,
 			}

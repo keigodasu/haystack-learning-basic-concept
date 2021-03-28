@@ -28,4 +28,3 @@ func TestNewStr(t *testing.T) {
 		})
 	}
 }
-
