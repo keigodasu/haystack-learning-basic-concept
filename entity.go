@@ -1,20 +1,28 @@
 package haystack_learning_basic_concept
 
 import (
+	"encoding/json"
 	"errors"
+	"fmt"
 )
 
 type Label string
 
 type Entity struct {
-	id   string
+	id    string
 	dis  string
 	Tags map[Label]Value
 }
 
+type JsonStructure struct {
+	ID    string
+	Dis  string
+	Tags map[Label]string
+}
+
 func NewEntity(id string) *Entity {
 	return &Entity{
-		id:   id,
+		id:    id,
 		Tags: map[Label]Value{},
 	}
 }
@@ -34,4 +42,23 @@ func (e *Entity) SetDis(dis string) error {
 
 func (e Entity) GetDis() string {
 	return e.dis
+}
+
+func (e Entity) MarshallJSON() ([]byte, error)  {
+	s := JsonStructure{
+		ID:   e.id,
+		Dis:  e.dis,
+		Tags: nil,
+	}
+
+	tags := map[Label]string{}
+
+	for l, v := range e.Tags {
+		tags[l] = v.ToHaystackJsonValue()
+		fmt.Println(tags[l])
+	}
+
+	s.Tags = tags
+
+	return json.Marshal(s)
 }

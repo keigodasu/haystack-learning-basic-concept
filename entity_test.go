@@ -1,6 +1,7 @@
 package haystack_learning_basic_concept
 
 import (
+	"fmt"
 	"reflect"
 	"testing"
 )
@@ -86,7 +87,7 @@ func TestEntity_GetID(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			e := &Entity{
-				id:   tt.fields.id,
+				id:    tt.fields.id,
 				dis:  tt.fields.dis,
 				Tags: tt.fields.Tags,
 			}
@@ -99,7 +100,7 @@ func TestEntity_GetID(t *testing.T) {
 
 func TestEntity_GetDis(t *testing.T) {
 	type fields struct {
-		id   string
+		ID   string
 		dis  string
 		Tags map[Label]Value
 	}
@@ -111,7 +112,7 @@ func TestEntity_GetDis(t *testing.T) {
 		{
 			name: "refer to dis",
 			fields: fields{
-				id:   "1111",
+				ID:   "1111",
 				dis:  "test",
 				Tags: nil,
 			},
@@ -121,7 +122,7 @@ func TestEntity_GetDis(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			e := Entity{
-				id:   tt.fields.id,
+				id:    tt.fields.ID,
 				dis:  tt.fields.dis,
 				Tags: tt.fields.Tags,
 			}
@@ -132,3 +133,47 @@ func TestEntity_GetDis(t *testing.T) {
 	}
 }
 
+func TestEntity_MarshallJSON(t *testing.T) {
+	type fields struct {
+		ID   string
+		dis  string
+		Tags map[Label]Value
+	}
+	tests := []struct {
+		name    string
+		fields  fields
+		want    []byte
+		wantErr bool
+	}{
+		{
+			name:    "marshall entity",
+			fields:  fields{
+				ID:   "1111",
+				dis:  "test",
+				Tags: map[Label]Value{"testTagKey": &Str{val: "testTagValue"}},
+			},
+			want:    []byte(`{"ID":"1111","Dis":"test","Tags":{"testTagKey":"s:testTagValue"}}`),
+			wantErr: false,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			e := Entity{
+				id:    tt.fields.ID,
+				dis:  tt.fields.dis,
+				Tags: tt.fields.Tags,
+			}
+			got, err := e.MarshallJSON()
+			if (err != nil) != tt.wantErr {
+				t.Errorf("MarshallJSON() error = %v, wantErr %v", err, tt.wantErr)
+				return
+			}
+			if !reflect.DeepEqual(got, tt.want) {
+				fmt.Println(string(got))
+				fmt.Println(string(tt.want))
+				fmt.Println(e)
+				t.Errorf("MarshallJSON() got = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
