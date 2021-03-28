@@ -18,7 +18,7 @@ func TestNewEntity(t *testing.T) {
 		{
 			name: "set uuid",
 			args: args{id: "1111"},
-			want: &Entity{"1111", "", map[Label]Value{}},
+			want: &Entity{"1111", "", map[string]Value{}},
 		},
 	}
 	for _, tt := range tests {
@@ -32,7 +32,7 @@ func TestNewEntity(t *testing.T) {
 
 func TestSetTag(t *testing.T) {
 	type args struct {
-		l Label
+		l string
 		v Value
 	}
 	tests := []struct {
@@ -48,7 +48,7 @@ func TestSetTag(t *testing.T) {
 					val: "testTagValue",
 				},
 			},
-			want: &Entity{"1111", "", map[Label]Value{
+			want: &Entity{"1111", "", map[string]Value{
 				"testLabelValue": &Str{
 					val: "testTagValue",
 				},
@@ -58,7 +58,7 @@ func TestSetTag(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			e := NewEntity("1111")
-			e.Tags = map[Label]Value{tt.args.l: tt.args.v}
+			e.Tags = map[string]Value{tt.args.l: tt.args.v}
 
 			if !reflect.DeepEqual(e, tt.want) {
 				t.Errorf("NewEntity() = %v, want %v", e, tt.want)
@@ -71,7 +71,7 @@ func TestEntity_GetID(t *testing.T) {
 	type fields struct {
 		id   string
 		dis  string
-		Tags map[Label]Value
+		Tags map[string]Value
 	}
 	tests := []struct {
 		name   string
@@ -102,7 +102,7 @@ func TestEntity_GetDis(t *testing.T) {
 	type fields struct {
 		ID   string
 		dis  string
-		Tags map[Label]Value
+		Tags map[string]Value
 	}
 	tests := []struct {
 		name   string
@@ -137,7 +137,7 @@ func TestEntity_MarshallJSON(t *testing.T) {
 	type fields struct {
 		ID   string
 		dis  string
-		Tags map[Label]Value
+		Tags map[string]Value
 	}
 	tests := []struct {
 		name    string
@@ -150,7 +150,7 @@ func TestEntity_MarshallJSON(t *testing.T) {
 			fields: fields{
 				ID:   "1111",
 				dis:  "test",
-				Tags: map[Label]Value{"testTagKey": &Str{val: "testTagValue"}},
+				Tags: map[string]Value{"testTagKey": &Str{val: "testTagValue"}},
 			},
 			want:    []byte(`{"dis":"test","id":"1111","testTagKey":"s:testTagValue"}`),
 			wantErr: false,
@@ -160,7 +160,7 @@ func TestEntity_MarshallJSON(t *testing.T) {
 			fields: fields{
 				ID:   "1111",
 				dis:  "test",
-				Tags: map[Label]Value{"testTagKey": &Bool{val: true}},
+				Tags: map[string]Value{"testTagKey": &Bool{val: true}},
 			},
 			want:    []byte(`{"dis":"test","id":"1111","testTagKey":"b:true"}`),
 			wantErr: false,
@@ -170,7 +170,7 @@ func TestEntity_MarshallJSON(t *testing.T) {
 			fields: fields{
 				ID:   "1111",
 				dis:  "test",
-				Tags: map[Label]Value{"testTagKey": &Bool{val: true}, "testTagKeyStr": &Str{val: "testTagValue"}},
+				Tags: map[string]Value{"testTagKey": &Bool{val: true}, "testTagKeyStr": &Str{val: "testTagValue"}},
 			},
 			want:    []byte(`{"dis":"test","id":"1111","testTagKey":"b:true","testTagKeyStr":"s:testTagValue"}`),
 			wantErr: false,

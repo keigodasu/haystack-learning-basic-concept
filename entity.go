@@ -5,24 +5,22 @@ import (
 	"errors"
 )
 
-type Label string
-
 type Entity struct {
 	id   string
 	dis  string
-	Tags map[Label]Value
+	Tags map[string]Value
 }
 
 type JsonStructure struct {
 	ID   string
 	Dis  string
-	Tags map[Label]string
+	Tags map[string]string
 }
 
 func NewEntity(id string) *Entity {
 	return &Entity{
 		id:   id,
-		Tags: map[Label]Value{},
+		Tags: map[string]Value{},
 	}
 }
 
@@ -44,7 +42,7 @@ func (e Entity) GetDis() string {
 }
 
 func (e Entity) MarshallJSON() ([]byte, error) {
-	tags := map[Label]string{}
+	tags := map[string]string{}
 
 	for l, v := range e.Tags {
 		tags[l] = v.ToHaystackJsonValue()

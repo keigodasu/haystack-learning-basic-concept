@@ -9,16 +9,24 @@ func main() {
 	entity := hay.NewEntity("@site")
 	entity.SetDis("the office building")
 
-	tags := map[hay.Label]hay.Value{
-		hay.Label("unit01_name"):   hay.NewStr("xxxxx"),
-		hay.Label("unit02_name"):   hay.NewStr("yyyyy"),
-		hay.Label("primary_flag"):  hay.NewBool(true),
-		hay.Label("secondly_flag"): hay.NewBool(false),
+	tags := map[string]hay.Value{
+		"unit01_name":   hay.NewStr("xxxxx"),
+		"unit02_name":   hay.NewStr("yyyyy"),
+		"primary_flag":  hay.NewBool(true),
+		"secondly_flag": hay.NewBool(false),
 	}
 
 	entity.Tags = tags
 
 	jsonEncoded, _ := entity.MarshallJSON()
+
+	fmt.Println(string(jsonEncoded))
+
+	grid := hay.Grid{
+		Meta:     nil,
+		Entities: []*hay.Entity{entity},
+	}
+	jsonEncoded, _ = grid.MarshallJSON()
 
 	fmt.Println(string(jsonEncoded))
 }
