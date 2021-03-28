@@ -3,7 +3,6 @@ package haystack_learning_basic_concept
 import (
 	"encoding/json"
 	"errors"
-	"fmt"
 )
 
 type Label string
@@ -55,7 +54,6 @@ func (e Entity) MarshallJSON() ([]byte, error)  {
 
 	for l, v := range e.Tags {
 		tags[l] = v.ToHaystackJsonValue()
-		fmt.Println(tags[l])
 	}
 
 	s.Tags = tags
