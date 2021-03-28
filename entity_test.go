@@ -146,13 +146,33 @@ func TestEntity_MarshallJSON(t *testing.T) {
 		wantErr bool
 	}{
 		{
-			name:    "marshall entity",
+			name:    "marshall entity with only Str",
 			fields:  fields{
 				ID:   "1111",
 				dis:  "test",
 				Tags: map[Label]Value{"testTagKey": &Str{val: "testTagValue"}},
 			},
 			want:    []byte(`{"ID":"1111","Dis":"test","Tags":{"testTagKey":"s:testTagValue"}}`),
+			wantErr: false,
+		},
+		{
+			name:    "marshall entity with only Bool",
+			fields:  fields{
+				ID:   "1111",
+				dis:  "test",
+				Tags: map[Label]Value{"testTagKey": &Bool{val: true}},
+			},
+			want:    []byte(`{"ID":"1111","Dis":"test","Tags":{"testTagKey":"b:true"}}`),
+			wantErr: false,
+		},
+		{
+			name:    "marshall entity with all type",
+			fields:  fields{
+				ID:   "1111",
+				dis:  "test",
+				Tags: map[Label]Value{"testTagKey": &Bool{val: true}, "testTagKeyStr": &Str{val: "testTagValue"}},
+			},
+			want:    []byte(`{"ID":"1111","Dis":"test","Tags":{"testTagKey":"b:true","testTagKeyStr":"s:testTagValue"}}`),
 			wantErr: false,
 		},
 	}

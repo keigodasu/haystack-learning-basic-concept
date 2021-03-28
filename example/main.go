@@ -12,6 +12,8 @@ func main()  {
 	tags := map[hay.Label]hay.Value{
 		hay.Label("unit01_name"): hay.NewStr("xxxxx"),
 		hay.Label("unit02_name"): hay.NewStr("yyyyy"),
+		hay.Label("primary_flag"): hay.NewBool(true),
+		hay.Label("secondly_flag"): hay.NewBool(false),
 	}
 
 	entity.Tags = tags
