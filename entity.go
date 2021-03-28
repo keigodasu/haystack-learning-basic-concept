@@ -1,36 +1,21 @@
 package haystack_learning_basic_concept
 
-import "errors"
-
-type TagKind int
-type Label string
-
-const (
-	HaystackStr TagKind = iota
+import (
+	"errors"
 )
+
+type Label string
 
 type Entity struct {
 	id   string
 	dis  string
-	Tags map[Label]*Value
-}
-
-type Value struct {
-	kind TagKind
-	str  string
-}
-
-func KindString(s string) *Value {
-	return &Value{
-		kind: HaystackStr,
-		str:  s,
-	}
+	Tags map[Label]Value
 }
 
 func NewEntity(id string) *Entity {
 	return &Entity{
 		id:   id,
-		Tags: map[Label]*Value{},
+		Tags: map[Label]Value{},
 	}
 }
 
